@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EclipseCodeFormatterProjectSettings">
+    <option name="projectSpecificProfile">
+      <ProjectSpecificProfile>
+        <option name="configType" value="JAVA_CONVENTIONS" />
+        <option name="formatter" value="ECLIPSE" />
+        <option name="importOrder" value="java;javax;com;org;" />
+      </ProjectSpecificProfile>
+    </option>
+  </component>
+</project>

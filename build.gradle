@@ -1,0 +1,13 @@
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+subprojects{
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	configurations {
+	    runtime.exclude module: 'spring-boot-starter-tomcat'
+	    runtime.exclude module: 'tomcat-jdbc'
+	    compile.exclude module: 'spring-boot-starter-tomcat'
+	    compile.exclude module: 'tomcat-jdbc'
+	}
+}

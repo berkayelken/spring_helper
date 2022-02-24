@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../Digital_Assets/.gradle/6.7.1/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.8/448003bc1b234aac04b58e27d7755c12c3ec4236/lombok-1.18.8.jar" />
+          <entry name="$PROJECT_DIR$/../Digital_Assets/.gradle/6.7.1/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.5.8/6e5f341aadc179b8a833582a058f555cb10fd6bd/spring-boot-configuration-processor-2.5.8.jar" />
+        </processorPath>
+        <module name="spring_helper.common.main" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../Digital_Assets/.gradle/6.7.1/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.8/448003bc1b234aac04b58e27d7755c12c3ec4236/lombok-1.18.8.jar" />
+        </processorPath>
+        <module name="spring_helper.rest_aop_helper.main" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="11">
+      <module name="Common" target="11" />
+      <module name="Common.main" target="11" />
+      <module name="Common.test" target="11" />
+      <module name="rest_aop_helper" target="11" />
+      <module name="rest_aop_helper.main" target="11" />
+      <module name="rest_aop_helper.test" target="11" />
+      <module name="RestAopHelper" target="11" />
+      <module name="RestAopHelper.main" target="11" />
+      <module name="RestAopHelper.test" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
