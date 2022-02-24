@@ -1,15 +1,20 @@
 package com.bananazura.aop.configuration;
 
-import com.bananazura.aop.advice.helper.exception.ExternalCallExceptionAspect;
-import com.bananazura.aop.advice.helper.exception.ModelExceptionAspect;
-import com.bananazura.aop.advice.helper.exception.RestControllerExceptionAspect;
-import com.bananazura.aop.advice.helper.exception.ServiceExceptionAspect;
-import com.bananazura.aop.advice.helper.exception.UtilityExceptionAspect;
-import com.bananazura.aop.advice.helper.logging.ErrorLoggingAspect;
-import com.bananazura.aop.advice.helper.logging.InfoLoggingAspect;
+import com.bananazura.aop.aspect.exception.ModelExceptionAspect;
+import com.bananazura.aop.aspect.exception.ExternalCallExceptionAspect;
+import com.bananazura.aop.aspect.exception.ModelExceptionAspect;
+import com.bananazura.aop.aspect.exception.RestControllerExceptionAspect;
+import com.bananazura.aop.aspect.exception.ServiceExceptionAspect;
+import com.bananazura.aop.aspect.exception.UtilityExceptionAspect;
+import com.bananazura.aop.aspect.logging.ErrorLoggingAspect;
+import com.bananazura.aop.aspect.logging.InfoLoggingAspect;
+import com.bananazura.aop.annotation.EnableBananazuraExceptionHandling;
+import com.bananazura.aop.annotation.EnableBananazuraLoggingHandling;
+import com.bananazura.aop.annotation.EnableBananazuraRestControllerAdvice;
 import com.bananazura.aop.elements.BananazuraJoinPoint;
 import com.bananazura.aop.elements.BananazuraAfterThrowingAdvice;
 import com.bananazura.aop.elements.JoinPointProceeder;
+
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.AfterReturningAdvice;
@@ -21,12 +26,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
+@EnableBananazuraExceptionHandling
+@EnableBananazuraLoggingHandling
+@EnableBananazuraRestControllerAdvice
 @Configuration
-@Import({ AdviceHandlingConfiguration.class, ExceptionHandlingConfiguration.class, LoggingHandlingConfiguration.class })
 public class AspectConfiguration {
 	@Value("${bananazura.spring.basePackage}")
 	private String basePackage;
