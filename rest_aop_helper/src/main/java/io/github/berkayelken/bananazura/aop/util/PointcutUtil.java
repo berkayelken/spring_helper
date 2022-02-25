@@ -2,6 +2,11 @@ package io.github.berkayelken.bananazura.aop.util;
 
 import org.aspectj.lang.annotation.Pointcut;
 
+/**
+ * @author 		: Berkay Yelken (https://github.com/berkayelken)
+ * @createdOn 	: 25-02-2022
+ * @project 	: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
+ */
 public final class PointcutUtil {
 
 	@Pointcut("within(@io.github.berkayelken.bananazura.common.annotation.AopEvict *) || @annotation(io.github.berkayelken.bananazura.common.annotation.AopEvict) || aspectPointcut()")
@@ -12,7 +17,7 @@ public final class PointcutUtil {
 	private static void aspectAnnotation() {
 	}
 
-	@Pointcut("aspectAnnotation() && !within(com.bananazura.aop..*)")
+	@Pointcut("aspectAnnotation() && !within(io.github.berkayelken.bananazura.aop..*)")
 	public static void aspectPointcut() {
 	}
 
@@ -28,7 +33,7 @@ public final class PointcutUtil {
 	private static void restControllerAnnotation() {
 	}
 
-	@Pointcut("restControllerAnnotation()")
+	@Pointcut("!aopEvictPointcut() && restControllerAnnotation()")
 	public static void restControllerPointcut() {
 	}
 
@@ -40,7 +45,7 @@ public final class PointcutUtil {
 	private static void serviceAnnotation() {
 	}
 
-	@Pointcut("serviceAnnotation()")
+	@Pointcut("!aopEvictPointcut() && serviceAnnotation()")
 	public static void servicePointcut() {
 	}
 
@@ -48,7 +53,7 @@ public final class PointcutUtil {
 	private static void externalCallAnnotation() {
 	}
 
-	@Pointcut("externalCallAnnotation()")
+	@Pointcut("!aopEvictPointcut() && externalCallAnnotation()")
 	public static void externalCallPointcut() {
 	}
 
@@ -56,7 +61,7 @@ public final class PointcutUtil {
 	private static void modelAnnotation() {
 	}
 
-	@Pointcut("modelAnnotation()")
+	@Pointcut("!aopEvictPointcut() && modelAnnotation()")
 	public static void modelPointcut() {
 	}
 
@@ -64,7 +69,7 @@ public final class PointcutUtil {
 	private static void utilityAnnotation() {
 	}
 
-	@Pointcut("utilityAnnotation()")
+	@Pointcut("!aopEvictPointcut() && utilityAnnotation()")
 	public static void utilityPointcut() {
 	}
 
@@ -72,7 +77,7 @@ public final class PointcutUtil {
 	public static void logInfoPointcut() {
 	}
 
-	@Pointcut("!aopEvictPointcut() && !restControllerPointcut() && !servicePointcut() && !externalCallPointcut() && !modelPointcut() && !utilityPointcut()")
+	@Pointcut("!restControllerPointcut() && !servicePointcut() && !externalCallPointcut() && !modelPointcut() && !utilityPointcut()")
 	public static void logErrorPointcut() {
 	}
 }

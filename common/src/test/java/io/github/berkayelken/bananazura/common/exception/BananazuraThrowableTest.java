@@ -1,6 +1,6 @@
 package io.github.berkayelken.bananazura.common.exception;
 
-import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwLocalizedThrowable;
+import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwBananazuraThrowable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -14,7 +14,7 @@ public class BananazuraThrowableTest {
 	@Test
 	public void testLocalizedThrowable() {
 		Exception basicException = new Exception();
-		BananazuraThrowable ex = throwLocalizedThrowable(Object.class, basicException, "errorCode");
+		BananazuraThrowable ex = throwBananazuraThrowable(Object.class, basicException, "errorCode");
 		ex.setErrorCodeAnnotation(null);
 		assertNull(ex.getErrorCodeAnnotation());
 		assertEquals(Object.class, ex.getClass());

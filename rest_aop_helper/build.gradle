@@ -40,16 +40,13 @@ dependencies {
     implementation name: 'bananazura-common-1.0.0'
 
     implementation 'org.springframework:spring-aop:5.3.16'
-    implementation 'org.springframework:spring-web:5.3.16'
-    implementation 'org.springframework:spring-webmvc:5.3.16'
     implementation 'org.springframework.boot:spring-boot-autoconfigure:2.6.3'
 
     implementation 'org.aspectj:aspectjrt:1.9.8'
     implementation 'org.aspectj:aspectjweaver:1.9.8'
 
     implementation 'org.projectlombok:lombok:1.18.8'
-
-    implementation 'org.slf4j:slf4j-api:2.0.0-alpha6'
+    implementation 'org.slf4j:slf4j-api:1.7.21'
 
     compileOnly 'javax.servlet:servlet-api:2.5'
 

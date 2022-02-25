@@ -1,5 +1,10 @@
 package io.github.berkayelken.bananazura.common.exception;
 
+/**
+ * @author 		: Berkay Yelken (https://github.com/berkayelken)
+ * @createdOn 	: 25-02-2022
+ * @project 	: Bananazura Common (https://github.com/berkayelken/spring_helper/tree/master/common)
+ */
 public class ServiceException extends UtilityException {
 	private static final long serialVersionUID = -1059051852271794147L;
 

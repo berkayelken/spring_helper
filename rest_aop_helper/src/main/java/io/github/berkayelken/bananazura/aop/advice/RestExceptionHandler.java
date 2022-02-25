@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import io.github.berkayelken.bananazura.aop.util.AspectUtil;
 import io.github.berkayelken.bananazura.common.properties.AppProperties;
-import io.github.berkayelken.bananazura.common.result.Result;
+import io.github.berkayelken.bananazura.common.result.FailResult;
 import io.github.berkayelken.bananazura.common.util.SpecialLog;
 import io.github.berkayelken.bananazura.common.exception.ExternalCallException;
 import io.github.berkayelken.bananazura.common.exception.BananazuraThrowable;
@@ -25,6 +25,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * @author 		: Berkay Yelken (https://github.com/berkayelken)
+ * @createdOn 	: 25-02-2022
+ * @project 	: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
+ */
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
 public class RestExceptionHandler {
@@ -32,7 +37,7 @@ public class RestExceptionHandler {
 	private AppProperties appConf;
 
 	@Autowired
-	private Result<?, ?> resultUtil;
+	private FailResult<?> resultUtil;
 
 	@Autowired(required = false)
 	private SpecialLog specialLog;

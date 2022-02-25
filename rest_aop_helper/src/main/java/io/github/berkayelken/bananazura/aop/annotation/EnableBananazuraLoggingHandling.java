@@ -8,6 +8,11 @@ import java.lang.annotation.Target;
 import io.github.berkayelken.bananazura.aop.configuration.LoggingHandlingConfiguration;
 import org.springframework.context.annotation.Import;
 
+/**
+ * @author 		: Berkay Yelken (https://github.com/berkayelken)
+ * @createdOn 	: 25-02-2022
+ * @project 	: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })
 @Import({ LoggingHandlingConfiguration.class })

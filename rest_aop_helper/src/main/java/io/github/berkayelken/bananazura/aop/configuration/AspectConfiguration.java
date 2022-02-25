@@ -10,14 +10,16 @@ import io.github.berkayelken.bananazura.aop.aspect.logging.InfoLoggingAspect;
 import io.github.berkayelken.bananazura.aop.annotation.EnableBananazuraExceptionHandling;
 import io.github.berkayelken.bananazura.aop.annotation.EnableBananazuraLoggingHandling;
 import io.github.berkayelken.bananazura.aop.annotation.EnableBananazuraRestControllerAdvice;
+import io.github.berkayelken.bananazura.aop.elements.AfterThrowingInterceptor;
 import io.github.berkayelken.bananazura.aop.elements.BananazuraJoinPoint;
-import io.github.berkayelken.bananazura.aop.elements.BananazuraAfterThrowingAdvice;
 import io.github.berkayelken.bananazura.aop.elements.JoinPointProceeder;
+import io.github.berkayelken.bananazura.aop.util.PointcutUtil;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.MethodBeforeAdvice;
+import org.springframework.aop.ThrowsAdvice;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
+/**
+ * @author 		: Berkay Yelken (https://github.com/berkayelken)
+ * @createdOn 	: 25-02-2022
+ * @project 	: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
+ */
 @EnableBananazuraExceptionHandling
 @EnableBananazuraLoggingHandling
 @EnableBananazuraRestControllerAdvice
@@ -60,6 +67,8 @@ public class AspectConfiguration {
 	@Autowired(required = false)
 	private JoinPointProceeder joinPointProceeder;
 
+	private static final String POINTCUT_PATH = PointcutUtil.class.getName();
+
 	@Bean
 	@ConditionalOnExpression("'${bananazura.spring.aop.log.info.before:true}' == 'true'")
 	public Advisor logInfoBeforeAdvice() {
@@ -70,7 +79,7 @@ public class AspectConfiguration {
 			infoLoggingAspect.logBeforeInfo(methodInvocation);
 		};
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-		String expression = "com.bananazura.aop.util.PointcutUtil.logInfoPointcut() && within(" + basePackage + "..*)";
+		String expression = POINTCUT_PATH + ".logInfoPointcut() && within(" + basePackage + "..*)";
 		pointcut.setExpression(expression);
 		return new DefaultPointcutAdvisor(pointcut, beforeAdvice);
 	}
@@ -87,7 +96,7 @@ public class AspectConfiguration {
 		};
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-		String expression = "com.bananazura.aop.util.PointcutUtil.logInfoPointcut() && within(" + basePackage + "..*)";
+		String expression = POINTCUT_PATH + ".logInfoPointcut() && within(" + basePackage + "..*)";
 		pointcut.setExpression(expression);
 
 		return new DefaultPointcutAdvisor(pointcut, beforeAdvice);
@@ -98,16 +107,13 @@ public class AspectConfiguration {
 		if (errorLoggingAspect == null)
 			return null;
 
-		BananazuraAfterThrowingAdvice throwsAdvice = (throwable, method, args, target) -> {
-			MethodInvocation methodInvocation = new BananazuraJoinPoint(target, method, args, joinPointProceeder);
-			errorLoggingAspect.logError(methodInvocation, throwable);
-		};
+		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(errorLoggingAspect, joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-		String expression = "com.bananazura.aop.util.PointcutUtil.logErrorPointcut() && within(" + basePackage + "..*)";
+		String expression = POINTCUT_PATH + ".logErrorPointcut() && within(" + basePackage + "..*)";
 		pointcut.setExpression(expression);
 
-		return new DefaultPointcutAdvisor(pointcut, throwsAdvice);
+		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
 	}
 
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1)
@@ -116,17 +122,14 @@ public class AspectConfiguration {
 		if (restControllerExceptionAspect == null)
 			return null;
 
-		BananazuraAfterThrowingAdvice throwsAdvice = (throwable, method, args, target) -> {
-			MethodInvocation methodInvocation = new BananazuraJoinPoint(target, method, args, joinPointProceeder);
-			restControllerExceptionAspect.handleError(methodInvocation, throwable);
-		};
+		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(restControllerExceptionAspect, joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-		String expression = "com.bananazura.aop.util.PointcutUtil.restControllerPointcut() && within(" + basePackage
+		String expression = POINTCUT_PATH + ".restControllerPointcut() && within(" + basePackage
 				+ "..*)";
 		pointcut.setExpression(expression);
 
-		return new DefaultPointcutAdvisor(pointcut, throwsAdvice);
+		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
 	}
 
 	@Order(Ordered.HIGHEST_PRECEDENCE + 2)
@@ -135,16 +138,13 @@ public class AspectConfiguration {
 		if (serviceExceptionAspect == null)
 			return null;
 
-		BananazuraAfterThrowingAdvice throwsAdvice = (throwable, method, args, target) -> {
-			MethodInvocation methodInvocation = new BananazuraJoinPoint(target, method, args, joinPointProceeder);
-			serviceExceptionAspect.handleError(methodInvocation, throwable);
-		};
+		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(serviceExceptionAspect, joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-		String expression = "com.bananazura.aop.util.PointcutUtil.servicePointcut() && within(" + basePackage + "..*)";
+		String expression = POINTCUT_PATH + ".servicePointcut() && within(" + basePackage + "..*)";
 		pointcut.setExpression(expression);
 
-		return new DefaultPointcutAdvisor(pointcut, throwsAdvice);
+		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
 	}
 
 	@Order(Ordered.HIGHEST_PRECEDENCE + 3)
@@ -153,16 +153,13 @@ public class AspectConfiguration {
 		if (modelExceptionAspect == null)
 			return null;
 
-		BananazuraAfterThrowingAdvice throwsAdvice = (throwable, method, args, target) -> {
-			MethodInvocation methodInvocation = new BananazuraJoinPoint(target, method, args, joinPointProceeder);
-			modelExceptionAspect.handleError(methodInvocation, throwable);
-		};
+		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(modelExceptionAspect, joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-		String expression = "com.bananazura.aop.util.PointcutUtil.modelPointcut() && within(" + basePackage + "..*)";
+		String expression = POINTCUT_PATH + ".modelPointcut() && within(" + basePackage + "..*)";
 		pointcut.setExpression(expression);
 
-		return new DefaultPointcutAdvisor(pointcut, throwsAdvice);
+		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
 	}
 
 	@Order(Ordered.HIGHEST_PRECEDENCE + 4)
@@ -171,16 +168,13 @@ public class AspectConfiguration {
 		if (utilityExceptionAspect == null)
 			return null;
 
-		BananazuraAfterThrowingAdvice throwsAdvice = (throwable, method, args, target) -> {
-			MethodInvocation methodInvocation = new BananazuraJoinPoint(target, method, args, joinPointProceeder);
-			utilityExceptionAspect.handleError(methodInvocation, throwable);
-		};
+		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(utilityExceptionAspect, joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-		String expression = "com.bananazura.aop.util.PointcutUtil.utilityPointcut() && within(" + basePackage + "..*)";
+		String expression = POINTCUT_PATH + ".utilityPointcut() && within(" + basePackage + "..*)";
 		pointcut.setExpression(expression);
 
-		return new DefaultPointcutAdvisor(pointcut, throwsAdvice);
+		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
 	}
 
 	@Order(Ordered.HIGHEST_PRECEDENCE + 5)
@@ -189,16 +183,12 @@ public class AspectConfiguration {
 		if (externalCallExceptionAspect == null)
 			return null;
 
-		BananazuraAfterThrowingAdvice throwsAdvice = (throwable, method, args, target) -> {
-			MethodInvocation methodInvocation = new BananazuraJoinPoint(target, method, args, joinPointProceeder);
-			externalCallExceptionAspect.handleError(methodInvocation, throwable);
-		};
+		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(externalCallExceptionAspect, joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-		String expression = "com.bananazura.aop.util.PointcutUtil.externalCallPointcut() && within(" + basePackage
-				+ "..*)";
+		String expression = POINTCUT_PATH + ".externalCallPointcut() && within(" + basePackage + "..*)";
 		pointcut.setExpression(expression);
 
-		return new DefaultPointcutAdvisor(pointcut, throwsAdvice);
+		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
 	}
 }

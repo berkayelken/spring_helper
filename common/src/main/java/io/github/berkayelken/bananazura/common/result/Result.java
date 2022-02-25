@@ -6,20 +6,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface Result<Success, Fail> {
-	Success getSuccessResult();
+/**
+ * @author 		: Berkay Yelken (https://github.com/berkayelken)
+ * @createdOn 	: 25-02-2022
+ * @project 	: Bananazura Common (https://github.com/berkayelken/spring_helper/tree/master/common)
+ */
+public interface Result<Success, Fail> extends SuccessResult<Success>, FailResult<Fail>{
 
-	default Success getSuccessResult(Object... args) {
-		return getSuccessResult();
-	}
-
-	Fail getFailResult();
-
-	Fail getFailResult(HttpServletRequest req, BananazuraThrowable lt);
-
-	Fail getInvalidArgumentResult(HttpServletRequest req, MethodArgumentNotValidException t, String errorCode);
-
-	default Fail getFailResult(Object... args) {
-		return getFailResult();
-	}
 }

@@ -4,6 +4,11 @@ import io.github.berkayelken.bananazura.common.annotation.ErrorCode;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author 		: Berkay Yelken (https://github.com/berkayelken)
+ * @createdOn 	: 25-02-2022
+ * @project 	: Bananazura Common (https://github.com/berkayelken/spring_helper/tree/master/common)
+ */
 @Getter
 @Setter
 public class BananazuraThrowable extends RuntimeException {
