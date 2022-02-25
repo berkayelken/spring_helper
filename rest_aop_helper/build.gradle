@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'com.bananazura'
+group 'io.github.berkayelken'
 version '1.0.0'
 
 repositories {
