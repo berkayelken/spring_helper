@@ -1,6 +1,7 @@
 package io.github.berkayelken.bananazura.common.result;
 
 import io.github.berkayelken.bananazura.common.exception.BananazuraThrowable;
+
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.servlet.http.HttpServletRequest;

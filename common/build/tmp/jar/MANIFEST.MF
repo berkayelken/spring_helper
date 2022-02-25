@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Implementation-Title: Bananazura Spring Rest Aop Helper
+Implementation-Version: 1.0.0
+

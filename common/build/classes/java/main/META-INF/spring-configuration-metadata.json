@@ -1,0 +1,47 @@
+{
+  "groups": [
+    {
+      "name": "bananazura.spring.common",
+      "type": "io.github.berkayelken.bananazura.common.properties.AppProperties",
+      "sourceType": "io.github.berkayelken.bananazura.common.properties.AppProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "bananazura.spring.common.default-error-code",
+      "type": "java.lang.String",
+      "sourceType": "io.github.berkayelken.bananazura.common.properties.AppProperties"
+    },
+    {
+      "name": "bananazura.spring.common.external-call-error-code",
+      "type": "java.lang.String",
+      "sourceType": "io.github.berkayelken.bananazura.common.properties.AppProperties"
+    },
+    {
+      "name": "bananazura.spring.common.method-argument-not-valid-error-code",
+      "type": "java.lang.String",
+      "sourceType": "io.github.berkayelken.bananazura.common.properties.AppProperties"
+    },
+    {
+      "name": "bananazura.spring.common.model-error-code",
+      "type": "java.lang.String",
+      "sourceType": "io.github.berkayelken.bananazura.common.properties.AppProperties"
+    },
+    {
+      "name": "bananazura.spring.common.rest-controller-error-code",
+      "type": "java.lang.String",
+      "sourceType": "io.github.berkayelken.bananazura.common.properties.AppProperties"
+    },
+    {
+      "name": "bananazura.spring.common.service-error-code",
+      "type": "java.lang.String",
+      "sourceType": "io.github.berkayelken.bananazura.common.properties.AppProperties"
+    },
+    {
+      "name": "bananazura.spring.common.utility-error-code",
+      "type": "java.lang.String",
+      "sourceType": "io.github.berkayelken.bananazura.common.properties.AppProperties"
+    }
+  ],
+  "hints": []
+}

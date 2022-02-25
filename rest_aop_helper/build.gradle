@@ -6,12 +6,38 @@ group 'io.github.berkayelken'
 version '1.0.0'
 
 repositories {
+    flatDir {
+        dirs "../buildedJars"
+    }
     mavenLocal()
     mavenCentral()
 }
 
+jar {
+    setArchivesBaseName("bananazura-aop")
+    manifest {
+        attributes 'Implementation-Title': 'Bananazura Spring Rest Aop Helper',
+                'Implementation-Version': archiveVersion,
+                'Main-Class': 'io.github.berkayelken.bananazura.aop.configuration.AspectConfiguration'
+    }
+}
+
+task fatJar(type: Jar) {
+    manifest.from jar.manifest
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    destinationDirectory = file("../buildedJars")
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it.absoluteFile) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+    with jar
+}
+
 dependencies {
-    implementation project(':common')
+    implementation name: 'bananazura-common-1.0.0'
 
     implementation 'org.springframework:spring-aop:5.3.16'
     implementation 'org.springframework:spring-web:5.3.16'

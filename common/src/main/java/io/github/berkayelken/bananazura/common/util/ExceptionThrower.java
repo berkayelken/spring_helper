@@ -1,6 +1,5 @@
 package io.github.berkayelken.bananazura.common.util;
 
-import com.bananazura.common.exception.*;
 import io.github.berkayelken.bananazura.common.exception.BananazuraThrowable;
 import io.github.berkayelken.bananazura.common.exception.ExternalCallException;
 import io.github.berkayelken.bananazura.common.exception.ModelException;
