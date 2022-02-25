@@ -21,7 +21,7 @@ Bananazura Spring Helper automatically logs all actions as info and error which 
 Bananazura Spring Helper wraps all exceptions as BananazuraException instead of MethodArgumentNotValidException. All exceptions are thrown to rest controller classes. On the other hand, Bananazura Spring Helper catches all exceptions and creates a fail scenario and returns a suitable response.
 
 # Please check rest_aop_helper and common README.md files for more detail and how to use.
-Common README.md: 
+# Common README.md: 
 https://github.com/berkayelken/spring_helper/blob/master/common/README.md
-Rest Aop Helper README.md:
+# Rest Aop Helper README.md:
 https://github.com/berkayelken/spring_helper/blob/master/rest_aop_helper/README.md
