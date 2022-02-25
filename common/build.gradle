@@ -10,11 +10,16 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot:2.6.3'
     implementation 'org.springframework:spring-web:5.3.16'
-
+    implementation 'org.springframework:spring-webmvc:5.3.16'
+    
     implementation 'org.projectlombok:lombok:1.18.8'
 
+    compileOnly 'javax.servlet:servlet-api:2.5'
+
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.6.3'
 
     testImplementation 'junit:junit:4.12'
 }

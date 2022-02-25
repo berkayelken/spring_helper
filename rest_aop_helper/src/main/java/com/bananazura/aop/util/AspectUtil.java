@@ -1,7 +1,5 @@
 package com.bananazura.aop.util;
 
-import static org.apache.logging.log4j.util.Strings.isBlank;
-
 import com.bananazura.common.annotation.ErrorCode;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -65,9 +63,29 @@ public final class AspectUtil {
 	}
 
 	public static String getErrorCodeWithoutVfError(String exceptionErrorCode, String defaultErrorCode) {
-		if (!isBlank(exceptionErrorCode))
+		if (isNotBlank(exceptionErrorCode))
 			return exceptionErrorCode;
 		return defaultErrorCode;
+	}
+
+	private static boolean isBlank(String str) {
+		int strLen;
+
+		if (str == null || (strLen = str.length()) == 0) {
+			return true;
+		}
+
+		for (int i = 0; i < strLen; i++) {
+			if ((Character.isWhitespace(str.charAt(i)) == false)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private static boolean isNotBlank(String str) {
+		return !isBlank(str);
 	}
 
 }
