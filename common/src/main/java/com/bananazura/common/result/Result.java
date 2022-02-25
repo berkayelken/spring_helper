@@ -14,7 +14,7 @@ public interface Result<Success, Fail> {
 
 	Fail getFailResult();
 
-	Fail getFailResult(BananazuraThrowable lt);
+	Fail getFailResult(HttpServletRequest req, BananazuraThrowable lt);
 
 	Fail getInvalidArgumentResult(HttpServletRequest req, MethodArgumentNotValidException t, String errorCode);
 

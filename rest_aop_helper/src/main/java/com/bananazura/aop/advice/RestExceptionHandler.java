@@ -44,7 +44,7 @@ public class RestExceptionHandler {
 		if (specialLog != null)
 			specialLog.logError(req, e);
 
-		return ok(resultUtil.getFailResult(e));
+		return ok(resultUtil.getFailResult(req, e));
 	}
 
 	@ExceptionHandler({ ModelException.class })
@@ -54,7 +54,7 @@ public class RestExceptionHandler {
 		if (specialLog != null)
 			specialLog.logError(req, e);
 
-		return ok(resultUtil.getFailResult(e));
+		return ok(resultUtil.getFailResult(req, e));
 	}
 
 	@ExceptionHandler({ UtilityException.class })
@@ -64,7 +64,7 @@ public class RestExceptionHandler {
 		if (specialLog != null)
 			specialLog.logError(req, e);
 
-		return ok(resultUtil.getFailResult(e));
+		return ok(resultUtil.getFailResult(req, e));
 	}
 
 	@ExceptionHandler({ RestControllerException.class })
@@ -74,7 +74,7 @@ public class RestExceptionHandler {
 		if (specialLog != null)
 			specialLog.logError(req, e);
 
-		return ok(resultUtil.getFailResult(e));
+		return ok(resultUtil.getFailResult(req, e));
 	}
 
 	@ExceptionHandler({ ExternalCallException.class })
@@ -84,7 +84,7 @@ public class RestExceptionHandler {
 		if (specialLog != null)
 			specialLog.logError(req, e);
 
-		return ok(resultUtil.getFailResult(e));
+		return ok(resultUtil.getFailResult(req, e));
 	}
 
 	@ExceptionHandler({ BananazuraThrowable.class })
@@ -94,7 +94,7 @@ public class RestExceptionHandler {
 		if (specialLog != null)
 			specialLog.logError(req, e);
 
-		return ok(resultUtil.getFailResult(e));
+		return ok(resultUtil.getFailResult(req, e));
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
