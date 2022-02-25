@@ -1,5 +1,2 @@
 include "common"
 include "rest_aop_helper"
-
-include ':common'
-project(':common').projectDir = new File('./common')
