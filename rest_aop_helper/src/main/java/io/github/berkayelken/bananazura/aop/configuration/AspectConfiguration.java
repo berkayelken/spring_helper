@@ -32,8 +32,8 @@ import org.springframework.core.annotation.Order;
 
 /**
  * @author 		: Berkay Yelken (https://github.com/berkayelken)
- * @createdOn 	: 25-02-2022
- * @project 	: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
+ * Date 		: 25-02-2022
+ * Project		: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
  */
 @EnableBananazuraExceptionHandling
 @EnableBananazuraLoggingHandling
