@@ -1,0 +1,14 @@
+
+*.bin
+bin/*
+.idea/*
+buildedJars/*
+*.class
+.gradle/*
+gradle/*
+.classpath
+.project
+common/gradle.properties
+gradle.properties
+rest_aop_helper/gradle.properties
+secring.gpg
