@@ -1,10 +1,11 @@
 package io.github.berkayelken.bananazura.aop.aspect.exception.handler;
 
-import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwRestControllerException;
+import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwBananazuraThrowable;
 
 import io.github.berkayelken.bananazura.aop.aspect.exception.RestControllerExceptionAspect;
 import io.github.berkayelken.bananazura.aop.util.AspectUtil;
 import io.github.berkayelken.bananazura.common.exception.BananazuraThrowable;
+import io.github.berkayelken.bananazura.common.exception.RestControllerException;
 import io.github.berkayelken.bananazura.common.properties.AppProperties;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -34,7 +35,7 @@ class RestControllerExceptionAspectImpl implements RestControllerExceptionAspect
 		String errorCode = AspectUtil.getErrorCode(methodInvocation, appConf.getRestControllerErrorCode(),
 				appConf.getDefaultErrorCode());
 
-		BananazuraThrowable ex = throwRestControllerException(throwerClass, t, errorCode);
+		BananazuraThrowable ex = throwBananazuraThrowable(RestControllerException.class, throwerClass, t, errorCode);
 		ex.setErrorCodeAnnotation(AspectUtil.handleAndGetErrorCode(methodInvocation));
 
 		throw ex;

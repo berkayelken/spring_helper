@@ -24,6 +24,7 @@ import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -70,10 +71,9 @@ public class AspectConfiguration {
 	private static final String POINTCUT_PATH = PointcutUtil.class.getName();
 
 	@Bean
+	@ConditionalOnBean(InfoLoggingAspect.class)
 	@ConditionalOnExpression("'${bananazura.spring.aop.log.info.before:true}' == 'true'")
 	public Advisor logInfoBeforeAdvice() {
-		if (infoLoggingAspect == null)
-			return null;
 		MethodBeforeAdvice beforeAdvice = (method, args, target) -> {
 			MethodInvocation methodInvocation = new BananazuraJoinPoint(target, method, args, joinPointProceeder);
 			infoLoggingAspect.logBeforeInfo(methodInvocation);
@@ -85,11 +85,9 @@ public class AspectConfiguration {
 	}
 
 	@Bean
+	@ConditionalOnBean(InfoLoggingAspect.class)
 	@ConditionalOnExpression("'${bananazura.spring.aop.log.info.after:true}' == 'true'")
 	public Advisor logAfterReturningAdvice() {
-		if (infoLoggingAspect == null)
-			return null;
-
 		AfterReturningAdvice beforeAdvice = (retVal, method, args, target) -> {
 			MethodInvocation methodInvocation = new BananazuraJoinPoint(target, method, args, joinPointProceeder);
 			infoLoggingAspect.logAfterReturningInfo(methodInvocation, retVal);
@@ -103,10 +101,8 @@ public class AspectConfiguration {
 	}
 
 	@Bean
+	@ConditionalOnBean(ErrorLoggingAspect.class)
 	public Advisor logErrorAdvice() {
-		if (errorLoggingAspect == null)
-			return null;
-
 		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(errorLoggingAspect, joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
@@ -118,15 +114,13 @@ public class AspectConfiguration {
 
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1)
 	@Bean
+	@ConditionalOnBean(ExternalCallExceptionAspect.class)
 	public Advisor handleRestControllerException() {
-		if (restControllerExceptionAspect == null)
-			return null;
-
-		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(restControllerExceptionAspect, joinPointProceeder);
+		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(restControllerExceptionAspect,
+				joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-		String expression = POINTCUT_PATH + ".restControllerPointcut() && within(" + basePackage
-				+ "..*)";
+		String expression = POINTCUT_PATH + ".restControllerPointcut() && within(" + basePackage + "..*)";
 		pointcut.setExpression(expression);
 
 		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
@@ -134,10 +128,8 @@ public class AspectConfiguration {
 
 	@Order(Ordered.HIGHEST_PRECEDENCE + 2)
 	@Bean
+	@ConditionalOnBean(ServiceExceptionAspect.class)
 	public Advisor handleServiceException() {
-		if (serviceExceptionAspect == null)
-			return null;
-
 		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(serviceExceptionAspect, joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
@@ -149,10 +141,8 @@ public class AspectConfiguration {
 
 	@Order(Ordered.HIGHEST_PRECEDENCE + 3)
 	@Bean
+	@ConditionalOnBean(ModelExceptionAspect.class)
 	public Advisor handleModelException() {
-		if (modelExceptionAspect == null)
-			return null;
-
 		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(modelExceptionAspect, joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
@@ -164,10 +154,8 @@ public class AspectConfiguration {
 
 	@Order(Ordered.HIGHEST_PRECEDENCE + 4)
 	@Bean
+	@ConditionalOnBean(UtilityExceptionAspect.class)
 	public Advisor handleUtilityException() {
-		if (utilityExceptionAspect == null)
-			return null;
-
 		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(utilityExceptionAspect, joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
@@ -179,11 +167,10 @@ public class AspectConfiguration {
 
 	@Order(Ordered.HIGHEST_PRECEDENCE + 5)
 	@Bean
-	public Advisor handleExternallCallException() {
-		if (externalCallExceptionAspect == null)
-			return null;
-
-		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(externalCallExceptionAspect, joinPointProceeder);
+	@ConditionalOnBean(ExternalCallExceptionAspect.class)
+	public Advisor handleExternalCallException() {
+		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(externalCallExceptionAspect,
+				joinPointProceeder);
 
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
 		String expression = POINTCUT_PATH + ".externalCallPointcut() && within(" + basePackage + "..*)";

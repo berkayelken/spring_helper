@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
  * Project		: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
  */
 public final class AspectUtil {
+	private AspectUtil() {
+		
+	}
 
 	public static void handleError(MethodInvocation methodInvocation, Throwable t) {
 		String methodName = methodInvocation.getMethod().getName();

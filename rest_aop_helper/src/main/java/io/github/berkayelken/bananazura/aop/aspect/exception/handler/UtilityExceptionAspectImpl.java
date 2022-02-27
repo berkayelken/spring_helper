@@ -2,10 +2,11 @@ package io.github.berkayelken.bananazura.aop.aspect.exception.handler;
 
 import static io.github.berkayelken.bananazura.aop.util.AspectUtil.getErrorCode;
 import static io.github.berkayelken.bananazura.aop.util.AspectUtil.handleAndGetErrorCode;
-import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwUtilityException;
+import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwBananazuraThrowable;
 
 import io.github.berkayelken.bananazura.aop.aspect.exception.UtilityExceptionAspect;
 import io.github.berkayelken.bananazura.common.exception.BananazuraThrowable;
+import io.github.berkayelken.bananazura.common.exception.UtilityException;
 import io.github.berkayelken.bananazura.common.properties.AppProperties;
 import io.github.berkayelken.bananazura.aop.util.AspectUtil;
 
@@ -35,7 +36,7 @@ class UtilityExceptionAspectImpl implements UtilityExceptionAspect {
 
 		String errorCode = getErrorCode(methodInvocation, appConf.getUtilityErrorCode(), appConf.getDefaultErrorCode());
 
-		BananazuraThrowable ex = throwUtilityException(throwerClass, t, errorCode);
+		BananazuraThrowable ex = throwBananazuraThrowable(UtilityException.class, throwerClass, t, errorCode);
 		ex.setErrorCodeAnnotation(handleAndGetErrorCode(methodInvocation));
 
 		throw ex;

@@ -2,10 +2,11 @@ package io.github.berkayelken.bananazura.aop.aspect.exception.handler;
 
 import static io.github.berkayelken.bananazura.aop.util.AspectUtil.getErrorCode;
 import static io.github.berkayelken.bananazura.aop.util.AspectUtil.handleAndGetErrorCode;
-import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwServiceException;
+import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwBananazuraThrowable;
 
 import io.github.berkayelken.bananazura.aop.aspect.exception.ServiceExceptionAspect;
 import io.github.berkayelken.bananazura.common.exception.BananazuraThrowable;
+import io.github.berkayelken.bananazura.common.exception.ServiceException;
 import io.github.berkayelken.bananazura.common.properties.AppProperties;
 import io.github.berkayelken.bananazura.aop.util.AspectUtil;
 
@@ -35,7 +36,7 @@ class ServiceExceptionAspectImpl implements ServiceExceptionAspect {
 
 		String errorCode = getErrorCode(methodInvocation, appConf.getServiceErrorCode(), appConf.getDefaultErrorCode());
 
-		BananazuraThrowable ex = throwServiceException(throwerClass, t, errorCode);
+		BananazuraThrowable ex = throwBananazuraThrowable(ServiceException.class, throwerClass, t, errorCode);
 		ex.setErrorCodeAnnotation(handleAndGetErrorCode(methodInvocation));
 
 		throw ex;

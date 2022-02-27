@@ -1,10 +1,11 @@
 package io.github.berkayelken.bananazura.aop.aspect.exception.handler;
 
-import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwExternalCallException;
+import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwBananazuraThrowable;
 
 import io.github.berkayelken.bananazura.aop.aspect.exception.ExternalCallExceptionAspect;
 import io.github.berkayelken.bananazura.aop.util.AspectUtil;
 import io.github.berkayelken.bananazura.common.exception.BananazuraThrowable;
+import io.github.berkayelken.bananazura.common.exception.ExternalCallException;
 import io.github.berkayelken.bananazura.common.properties.AppProperties;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -34,7 +35,7 @@ class ExternalCallExceptionAspectImpl implements ExternalCallExceptionAspect {
 		String errorCode = AspectUtil.getErrorCode(methodInvocation, appConf.getExternalCallErrorCode(),
 				appConf.getDefaultErrorCode());
 
-		BananazuraThrowable ex = throwExternalCallException(throwerClass, t, errorCode);
+		BananazuraThrowable ex = throwBananazuraThrowable(ExternalCallException.class, throwerClass, t, errorCode);
 		ex.setErrorCodeAnnotation(AspectUtil.handleAndGetErrorCode(methodInvocation));
 
 		throw ex;

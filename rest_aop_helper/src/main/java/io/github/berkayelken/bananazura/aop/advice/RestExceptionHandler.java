@@ -26,9 +26,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * @author 		: Berkay Yelken (https://github.com/berkayelken)
- * Date 		: 25-02-2022
- * Project		: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
+ * @author : Berkay Yelken (https://github.com/berkayelken) Date : 25-02-2022
+ *         Project : Bananazura AOP
+ *         (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
  */
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice

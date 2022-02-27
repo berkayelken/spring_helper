@@ -1,10 +1,11 @@
 package io.github.berkayelken.bananazura.aop.aspect.exception.handler;
 
-import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwModelException;
+import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwBananazuraThrowable;
 
 import io.github.berkayelken.bananazura.aop.aspect.exception.ModelExceptionAspect;
 import io.github.berkayelken.bananazura.aop.util.AspectUtil;
 import io.github.berkayelken.bananazura.common.exception.BananazuraThrowable;
+import io.github.berkayelken.bananazura.common.exception.ModelException;
 import io.github.berkayelken.bananazura.common.properties.AppProperties;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -31,9 +32,10 @@ class ModelExceptionAspectImpl implements ModelExceptionAspect {
 
 		AspectUtil.handleError(methodName, throwerClass, t);
 
-		String errorCode = AspectUtil.getErrorCode(methodInvocation, appConf.getModelErrorCode(), appConf.getDefaultErrorCode());
+		String errorCode = AspectUtil.getErrorCode(methodInvocation, appConf.getModelErrorCode(),
+				appConf.getDefaultErrorCode());
 
-		BananazuraThrowable ex = throwModelException(throwerClass, t, errorCode);
+		BananazuraThrowable ex = throwBananazuraThrowable(ModelException.class, throwerClass, t, errorCode);
 		ex.setErrorCodeAnnotation(AspectUtil.handleAndGetErrorCode(methodInvocation));
 
 		throw ex;

@@ -9,6 +9,10 @@ import org.aspectj.lang.annotation.Pointcut;
  */
 public final class PointcutUtil {
 
+	private PointcutUtil() {
+
+	}
+
 	@Pointcut("within(@io.github.berkayelken.bananazura.common.annotation.AopEvict *) || @annotation(io.github.berkayelken.bananazura.common.annotation.AopEvict) || aspectPointcut()")
 	public static void aopEvictPointcut() {
 	}
