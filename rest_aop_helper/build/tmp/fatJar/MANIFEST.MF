@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: Bananazura Spring Rest Aop Helper
-Implementation-Version: task ':jar' property 'archiveVersion'
-Main-Class: io.github.berkayelken.bananazura.aop.configuration.AspectC
- onfiguration
-

@@ -7,7 +7,7 @@ plugins {
 
 group 'io.github.berkayelken'
 setArchivesBaseName('bananazura-aop')
-version '1.0.0'
+version '1.0.1'
 
 task javadocJar(type: Jar) {
     setArchivesBaseName("bananazura-aop")
@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.github.berkayelken:bananazura-common:1.0.0'
+    implementation 'io.github.berkayelken:bananazura-common:1.0.1'
 
     compileOnly 'org.springframework:spring-web:5.3.16'
     compileOnly 'org.springframework:spring-webmvc:5.3.16'
