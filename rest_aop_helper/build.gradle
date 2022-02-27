@@ -45,8 +45,8 @@ dependencies {
     implementation 'org.aspectj:aspectjrt:1.9.8'
     implementation 'org.aspectj:aspectjweaver:1.9.8'
 
-    implementation 'org.projectlombok:lombok:1.18.8'
-    implementation 'org.slf4j:slf4j-api:1.7.21'
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    compileOnly 'org.slf4j:slf4j-api:1.7.21'
 
     compileOnly 'javax.servlet:servlet-api:2.5'
 
