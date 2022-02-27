@@ -1,46 +1,46 @@
 plugins {
     id 'java'
+    id 'java-library'
+    id 'maven'
+    id 'signing'
 }
 
 group 'io.github.berkayelken'
+setArchivesBaseName('bananazura-aop')
 version '1.0.0'
 
+task javadocJar(type: Jar) {
+    setArchivesBaseName("bananazura-aop")
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    setArchivesBaseName("bananazura-aop")
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+signing {
+    sign configurations.archives
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
 repositories {
-    flatDir {
-        dirs "../buildedJars"
-    }
-    mavenLocal()
     mavenCentral()
 }
 
-jar {
-    setArchivesBaseName("bananazura-aop")
-    manifest {
-        attributes 'Implementation-Title': 'Bananazura Spring Rest Aop Helper',
-                'Implementation-Version': archiveVersion,
-                'Main-Class': 'io.github.berkayelken.bananazura.aop.configuration.AspectConfiguration'
-    }
-}
-
-task fatJar(type: Jar) {
-    manifest.from jar.manifest
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    destinationDirectory = file("../buildedJars")
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it.absoluteFile) }
-    } {
-        exclude "META-INF/*.SF"
-        exclude "META-INF/*.DSA"
-        exclude "META-INF/*.RSA"
-    }
-    with jar
-}
-
 dependencies {
-    implementation name: 'bananazura-common-1.0.0'
+    implementation 'io.github.berkayelken:bananazura-common:1.0.0'
 
+    compileOnly 'org.springframework:spring-web:5.3.16'
+    compileOnly 'org.springframework:spring-webmvc:5.3.16'
     implementation 'org.springframework:spring-aop:5.3.16'
-    implementation 'org.springframework.boot:spring-boot-autoconfigure:2.6.3'
+    compileOnly 'org.springframework.boot:spring-boot-autoconfigure:2.6.4'
+
 
     implementation 'org.aspectj:aspectjrt:1.9.8'
     implementation 'org.aspectj:aspectjweaver:1.9.8'
@@ -51,10 +51,50 @@ dependencies {
     compileOnly 'javax.servlet:servlet-api:2.5'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
-
-    testImplementation 'junit:junit:4.12'
 }
 
 test {
     useJUnitPlatform()
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name = 'bananazura-aop'
+                packaging 'jar'
+                description = 'Bananazura Spring Helper with Aspect Oriented Programming'
+                url = 'https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'Berkay.Yelken'
+                        name = 'Berkay Yelken'
+                        email = 'berkayelken@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/berkayelken/spring_helper.git'
+                    developerConnection = 'scm:git:git@github.com:berkayelken/spring_helper.git'
+                    url = 'https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper'
+                }
+
+            }
+        }
+    }
 }
