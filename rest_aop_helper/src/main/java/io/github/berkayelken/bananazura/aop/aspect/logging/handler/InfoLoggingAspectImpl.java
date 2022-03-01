@@ -5,8 +5,11 @@ import io.github.berkayelken.bananazura.aop.aspect.logging.InfoLoggingAspect;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Service;
+
+import static io.github.berkayelken.bananazura.aop.util.LoggingUtil.printBeforeLog;
 
 /**
  * @author 		: Berkay Yelken (https://github.com/berkayelken)
@@ -16,14 +19,17 @@ import org.springframework.stereotype.Service;
 @Service
 @ConditionalOnExpression("'${bananazura.spring.aop.log.info.aspect:true}' == 'true'")
 class InfoLoggingAspectImpl implements InfoLoggingAspect {
+	@Value("${bananazura.spring.aop.log.info.printarguments:true}")
+	private boolean printArguments;
+
 	public void logBeforeInfo(MethodInvocation methodInvocation) {
 		String methodName = methodInvocation.getMethod().getName();
 
 		StringBuilder message = new StringBuilder(methodName);
 		message.append(" is started.");
 
-		Logger logger = LoggerFactory.getLogger(methodInvocation.getMethod().getDeclaringClass());
-		logger.info(message.toString());
+		printBeforeLog(message, methodInvocation.getMethod().getDeclaringClass(), printArguments,
+				methodInvocation.getArguments());
 	}
 
 	public void logAfterReturningInfo(MethodInvocation methodInvocation, Object returnValue) {
@@ -38,4 +44,6 @@ class InfoLoggingAspectImpl implements InfoLoggingAspect {
 		} else
 			logger.info(message.toString());
 	}
+
+
 }
