@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * @author 		: Berkay Yelken (https://github.com/berkayelken)
- * Date 		: 25-02-2022
+ * Since 	:  1.0.0
  * Project		: Bananazura Common (https://github.com/berkayelken/spring_helper/tree/master/common)
  */
 @Getter

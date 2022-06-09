@@ -1,5 +1,7 @@
 package io.github.berkayelken.bananazura.common.annotation;
 
+import org.springframework.core.annotation.AliasFor;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -7,10 +9,15 @@ import java.lang.annotation.Target;
 
 /**
  * @author 		: Berkay Yelken (https://github.com/berkayelken)
- * Date 		: 25-02-2022
+ * Since 	:  1.0.0
  * Project		: Bananazura Common (https://github.com/berkayelken/spring_helper/tree/master/common)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })
-public @interface ModelForAop {
+public @interface Model {
+	@AliasFor("name")
+	String value() default "";
+
+	@AliasFor("value")
+	String name() default "";
 }

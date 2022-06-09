@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author 		: Berkay Yelken (https://github.com/berkayelken)
- * Date 		: 25-02-2022
+ * Since 	:  1.0.0
  * Project		: Bananazura Common (https://github.com/berkayelken/spring_helper/tree/master/common)
  **/
 public interface FailResult<T> {
@@ -17,7 +17,5 @@ public interface FailResult<T> {
 
 	T getInvalidArgumentResult(HttpServletRequest req, MethodArgumentNotValidException t, String errorCode);
 
-	default T getFailResult(Object... args) {
-		return getFailResult();
-	}
+	T getFailResult(Object... args);
 }
