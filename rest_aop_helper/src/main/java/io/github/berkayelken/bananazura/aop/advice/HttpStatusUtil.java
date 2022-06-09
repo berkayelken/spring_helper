@@ -6,6 +6,11 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * @author 		: Berkay Yelken (https://github.com/berkayelken)
+ *Since 		: 1.0.2
+ * Project		: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
+ */
 @Service
 class HttpStatusUtil {
 	private static HttpStatusUtil instance;
@@ -15,6 +20,9 @@ class HttpStatusUtil {
 
 	@Value("${bananazura.spring.errorCodes.service}")
 	private int serviceStatus;
+
+	@Value("${bananazura.spring.errorCodes.repository}")
+	private int repositoryStatus;
 
 	@Value("${bananazura.spring.errorCodes.model}")
 	private int modelStatus;
@@ -41,6 +49,16 @@ class HttpStatusUtil {
 
 	static HttpStatus getServiceExceptionStatus() {
 		HttpStatus httpStatus = getHttpStatus(instance.serviceStatus, instance.defaultStatus);
+
+		if(httpStatus == null) {
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		return httpStatus;
+	}
+
+	static HttpStatus getRepositoryExceptionStatus() {
+		HttpStatus httpStatus = getHttpStatus(instance.repositoryStatus, instance.defaultStatus);
 
 		if(httpStatus == null) {
 			return HttpStatus.INTERNAL_SERVER_ERROR;

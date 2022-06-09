@@ -7,10 +7,12 @@ import static io.github.berkayelken.bananazura.aop.advice.HttpStatusUtil.getOthe
 import static io.github.berkayelken.bananazura.aop.advice.HttpStatusUtil.getRestControllerExceptionStatus;
 import static io.github.berkayelken.bananazura.aop.advice.HttpStatusUtil.getServiceExceptionStatus;
 import static io.github.berkayelken.bananazura.aop.advice.HttpStatusUtil.getUtilityExceptionStatus;
+import static io.github.berkayelken.bananazura.common.util.ErrorCodeUtil.getErrorCodeWithoutVfError;
 import static org.springframework.http.ResponseEntity.status;
 
 import javax.servlet.http.HttpServletRequest;
 
+import io.github.berkayelken.bananazura.common.exception.RepositoryException;
 import io.github.berkayelken.bananazura.common.properties.AppProperties;
 import io.github.berkayelken.bananazura.common.result.FailResult;
 import io.github.berkayelken.bananazura.common.util.SpecialLog;
@@ -34,9 +36,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * @author : Berkay Yelken (https://github.com/berkayelken)
- * Date : 25-02-2022
- * Project : Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
+ * @author 	: Berkay Yelken (https://github.com/berkayelken)
+ *Since 	:  1.0.0
+ * Project 	: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
  */
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
@@ -52,6 +54,7 @@ public class RestExceptionHandler {
 	private SpecialLog specialLog;
 
 	private static final HttpStatus SERVICE_STATUS = getServiceExceptionStatus();
+	private static final HttpStatus REPOSITORY_STATUS = getServiceExceptionStatus();
 	private static final HttpStatus MODEL_STATUS = getModelExceptionStatus();
 	private static final HttpStatus UTILITY_STATUS = getUtilityExceptionStatus();
 	private static final HttpStatus REST_CONTROLLER_STATUS = getRestControllerExceptionStatus();
@@ -68,6 +71,17 @@ public class RestExceptionHandler {
 			specialLog.logError(req, e);
 
 		return status(SERVICE_STATUS).body(resultUtil.getFailResult(req, e));
+	}
+
+	@ExceptionHandler({ RepositoryException.class })
+	@ConditionalOnExpression("'${bananazura.spring.aop.rest.advice.repository:true}' == 'true'")
+	public ResponseEntity<?> handleRespositoryException(HttpServletRequest req, RepositoryException e) {
+		Logger logger = LoggerFactory.getLogger(e.getThrowerClass());
+		logger.error(e.getMessage(), e.getCause());
+		if (specialLog != null)
+			specialLog.logError(req, e);
+
+		return status(REPOSITORY_STATUS).body(resultUtil.getFailResult(req, e));
 	}
 
 	@ExceptionHandler({ ModelException.class })
@@ -132,7 +146,7 @@ public class RestExceptionHandler {
 
 		String message = "RestController was called with unvalid request body. :: requestUrl={}";
 		logger.error(message, req.getRequestURI(), e);
-		String errorCode = AspectUtil.getErrorCodeWithoutVfError(appConf.getMethodArgumentNotValidErrorCode(),
+		String errorCode = getErrorCodeWithoutVfError(appConf.getMethodArgumentNotValidErrorCode(),
 				appConf.getDefaultErrorCode());
 		if (specialLog != null)
 			specialLog.logError(req, e);

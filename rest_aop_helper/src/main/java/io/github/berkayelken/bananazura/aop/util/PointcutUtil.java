@@ -4,7 +4,7 @@ import org.aspectj.lang.annotation.Pointcut;
 
 /**
  * @author 		: Berkay Yelken (https://github.com/berkayelken)
- * Date 		: 25-02-2022
+ * Since 	:  1.0.0
  * Project		: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
  */
 public final class PointcutUtil {
@@ -33,6 +33,14 @@ public final class PointcutUtil {
 	public static void configPointcut() {
 	}
 
+	@Pointcut("within(@org.springframework.stereotype.Repository *)")
+	private static void repositoryAnnotation() {
+	}
+
+	@Pointcut("!aopEvictPointcut() && repositoryAnnotation()")
+	private static void repositoryPointcut() {
+	}
+
 	@Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
 	private static void restControllerAnnotation() {
 	}
@@ -41,11 +49,7 @@ public final class PointcutUtil {
 	public static void restControllerPointcut() {
 	}
 
-	@Pointcut("within(@org.springframework.stereotype.Repository *)")
-	private static void repositoryAnnotation() {
-	}
-
-	@Pointcut("within(@org.springframework.stereotype.Service *) || repositoryAnnotation()")
+	@Pointcut("within(@org.springframework.stereotype.Service *)")
 	private static void serviceAnnotation() {
 	}
 
@@ -61,7 +65,7 @@ public final class PointcutUtil {
 	public static void externalCallPointcut() {
 	}
 
-	@Pointcut("within(@io.github.berkayelken.bananazura.common.annotation.ModelForAop *)")
+	@Pointcut("within(@io.github.berkayelken.bananazura.common.annotation.Model *)")
 	private static void modelAnnotation() {
 	}
 

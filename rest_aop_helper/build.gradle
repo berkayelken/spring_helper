@@ -34,7 +34,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.github.berkayelken:bananazura-common:1.0.1'
+    //implementation 'io.github.berkayelken:bananazura-common:1.0.1'
+    implementation project(":common")
 
     compileOnly 'org.springframework:spring-web:5.3.16'
     compileOnly 'org.springframework:spring-webmvc:5.3.16'

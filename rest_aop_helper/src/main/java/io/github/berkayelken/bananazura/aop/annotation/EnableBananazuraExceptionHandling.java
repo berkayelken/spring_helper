@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 
 /**
  * @author 		: Berkay Yelken (https://github.com/berkayelken)
- * Date 		: 25-02-2022
+ * Since 	:  1.0.0
  * Project		: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
  */
 @Retention(RetentionPolicy.RUNTIME)

@@ -1,7 +1,9 @@
 package io.github.berkayelken.bananazura.aop.configuration;
 
+import io.github.berkayelken.bananazura.aop.aspect.exception.BananazuraThrowableAspect;
 import io.github.berkayelken.bananazura.aop.aspect.exception.ModelExceptionAspect;
 import io.github.berkayelken.bananazura.aop.aspect.exception.ExternalCallExceptionAspect;
+import io.github.berkayelken.bananazura.aop.aspect.exception.RepositoryExceptionAspect;
 import io.github.berkayelken.bananazura.aop.aspect.exception.RestControllerExceptionAspect;
 import io.github.berkayelken.bananazura.aop.aspect.exception.ServiceExceptionAspect;
 import io.github.berkayelken.bananazura.aop.aspect.exception.UtilityExceptionAspect;
@@ -33,7 +35,7 @@ import org.springframework.core.annotation.Order;
 
 /**
  * @author 		: Berkay Yelken (https://github.com/berkayelken)
- * Date 		: 25-02-2022
+ * Since 	:  1.0.0
  * Project		: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
  */
 @EnableBananazuraExceptionHandling
@@ -64,6 +66,12 @@ public class AspectConfiguration {
 
 	@Autowired(required = false)
 	private UtilityExceptionAspect utilityExceptionAspect;
+
+	@Autowired(required = false)
+	private RepositoryExceptionAspect repositoryExceptionAspect;
+
+	@Autowired(required = false)
+	private BananazuraThrowableAspect bananazuraThrowableAspect;
 
 	@Autowired(required = false)
 	private JoinPointProceeder joinPointProceeder;
@@ -114,7 +122,21 @@ public class AspectConfiguration {
 
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1)
 	@Bean
-	@ConditionalOnBean(ExternalCallExceptionAspect.class)
+	@ConditionalOnBean(BananazuraThrowableAspect.class)
+	public Advisor handleBananazuraThrowable() {
+		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(bananazuraThrowableAspect,
+				joinPointProceeder);
+
+		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+		String expression = POINTCUT_PATH + ".logInfoPointcut() && within(" + basePackage + "..*)";
+		pointcut.setExpression(expression);
+
+		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
+	}
+
+	@Order(Ordered.HIGHEST_PRECEDENCE + 2)
+	@Bean
+	@ConditionalOnBean(RestControllerExceptionAspect.class)
 	public Advisor handleRestControllerException() {
 		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(restControllerExceptionAspect,
 				joinPointProceeder);
@@ -126,7 +148,7 @@ public class AspectConfiguration {
 		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
 	}
 
-	@Order(Ordered.HIGHEST_PRECEDENCE + 2)
+	@Order(Ordered.HIGHEST_PRECEDENCE + 3)
 	@Bean
 	@ConditionalOnBean(ServiceExceptionAspect.class)
 	public Advisor handleServiceException() {
@@ -139,7 +161,20 @@ public class AspectConfiguration {
 		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
 	}
 
-	@Order(Ordered.HIGHEST_PRECEDENCE + 3)
+	@Order(Ordered.HIGHEST_PRECEDENCE + 4)
+	@Bean
+	@ConditionalOnBean(RepositoryExceptionAspect.class)
+	public Advisor handleRepositoryException() {
+		ThrowsAdvice afterThrowingAdvice = new AfterThrowingInterceptor(repositoryExceptionAspect, joinPointProceeder);
+
+		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+		String expression = POINTCUT_PATH + ".repositoryPointcut() && within(" + basePackage + "..*)";
+		pointcut.setExpression(expression);
+
+		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
+	}
+
+	@Order(Ordered.HIGHEST_PRECEDENCE + 5)
 	@Bean
 	@ConditionalOnBean(ModelExceptionAspect.class)
 	public Advisor handleModelException() {
@@ -152,7 +187,7 @@ public class AspectConfiguration {
 		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
 	}
 
-	@Order(Ordered.HIGHEST_PRECEDENCE + 4)
+	@Order(Ordered.HIGHEST_PRECEDENCE + 6)
 	@Bean
 	@ConditionalOnBean(UtilityExceptionAspect.class)
 	public Advisor handleUtilityException() {
@@ -165,7 +200,7 @@ public class AspectConfiguration {
 		return new DefaultPointcutAdvisor(pointcut, afterThrowingAdvice);
 	}
 
-	@Order(Ordered.HIGHEST_PRECEDENCE + 5)
+	@Order(Ordered.HIGHEST_PRECEDENCE + 7)
 	@Bean
 	@ConditionalOnBean(ExternalCallExceptionAspect.class)
 	public Advisor handleExternalCallException() {

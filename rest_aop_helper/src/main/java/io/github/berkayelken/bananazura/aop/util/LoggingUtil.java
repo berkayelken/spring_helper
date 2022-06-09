@@ -6,7 +6,13 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author 		: Berkay Yelken (https://github.com/berkayelken)
+ * Date 		: 02-03-2022
+ * Project		: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
+ */
 public final class LoggingUtil {
+
 	private LoggingUtil() {
 
 	}

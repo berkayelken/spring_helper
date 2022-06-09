@@ -1,8 +1,8 @@
 package io.github.berkayelken.bananazura.aop.aspect.exception.handler;
 
-import static io.github.berkayelken.bananazura.aop.util.AspectUtil.getErrorCode;
-import static io.github.berkayelken.bananazura.aop.util.AspectUtil.handleAndGetErrorCode;
 import static io.github.berkayelken.bananazura.aop.util.LoggingUtil.handleErrorLog;
+import static io.github.berkayelken.bananazura.common.util.ErrorCodeUtil.getErrorCode;
+import static io.github.berkayelken.bananazura.common.util.ErrorCodeUtil.handleAndGetErrorCode;
 import static io.github.berkayelken.bananazura.common.util.ExceptionThrower.throwBananazuraThrowable;
 
 import io.github.berkayelken.bananazura.aop.aspect.exception.ServiceExceptionAspect;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author 		: Berkay Yelken (https://github.com/berkayelken)
- * Date 		: 25-02-2022
+ * Since 	:  1.0.0
  * Project		: Bananazura AOP (https://github.com/berkayelken/spring_helper/tree/master/rest_aop_helper)
  */
 @Service
