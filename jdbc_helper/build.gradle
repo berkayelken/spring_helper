@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'maven'
+    id 'signing'
+}
+
+group 'io.github.berkayelken'
+setArchivesBaseName('bananazura-jdbc')
+version '1.0.2'
+
+task javadocJar(type: Jar) {
+    setArchivesBaseName("bananazura-aop")
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    setArchivesBaseName("bananazura-aop")
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+signing {
+    sign configurations.archives
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":common")
+    compileOnly 'org.springframework:spring-jdbc:5.3.20'
+
+    compileOnly 'org.slf4j:slf4j-api:1.7.21'
+
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
